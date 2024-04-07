@@ -61,7 +61,7 @@ final readonly class QueryPrepare
             foreach ($subqueries as $key => $subquery) {
                 try {
                     $subquery = preg_replace_callback(
-                        '/(?<template>(?<token>=\s|\(|\s)\?(?<specificator>[adf#])?)/i',
+                        '/(?<template>(?<token>=\s|\(|\s)\?(?<specificator>[adf])?)/i',
                         $handler,
                         $subquery
                     );
