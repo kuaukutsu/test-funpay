@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<psalm
+        checkForThrowsInGlobalScope="true"
+        ensureArrayStringOffsetsExist="true"
+        errorLevel="2"
+        findUnusedPsalmSuppress="true"
+        findUnusedBaselineEntry="true"
+        findUnusedCode="false"
+        sealAllMethods="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <ignoreFiles>
+            <file name="src/DatabaseTest.php" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <MixedArrayAccess errorLevel="suppress"/>
+        <MixedArrayAssignment errorLevel="suppress"/>
+        <TypeDoesNotContainType errorLevel="info"/>
+        <RedundantCastGivenDocblockType errorLevel="info"/>
+    </issueHandlers>
+</psalm>

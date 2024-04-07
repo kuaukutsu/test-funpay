@@ -1,0 +1,74 @@
+version: '3.9'
+
+x-services-volume:
+  &services-volume
+  - type: bind
+    source: ./
+    target: /app
+
+x-default-logging:
+  &default-logging
+  driver: local
+  options:
+    max-size: "1m"
+    max-file: "3"
+
+services:
+  cli:
+    container_name: test_funpay_cli
+    build:
+      context: docker/php/cli
+      target: app_devel
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/app"
+    depends_on:
+      - db
+    networks:
+      - test_funpay
+    env_file:
+      - ./docker/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  app:
+    container_name: test_funpay_app
+    build:
+      context: docker/php/cli
+      target: app_cli
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/app"
+    depends_on:
+      - db
+    networks:
+      - test_funpay
+    env_file:
+      - ./docker/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  db:
+    container_name: test_funpay_db
+    image: mysql:8.0
+    networks:
+      test_funpay:
+        aliases:
+          - db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+      - test_database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dbpassword
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+    logging: *default-logging
+
+networks:
+  test_funpay:
+
+volumes:
+  test_database:
