@@ -70,13 +70,12 @@ final readonly class Argument
         }
 
         if (is_array($this->value)) {
-            $string = '';
+            $conditionString = '';
             foreach ($this->value as $value) {
-                $argument = new self($value);
-                $string .=  $argument->toCondition() . ', ';
+                $conditionString .=  (new self($value))->toCondition() . ', ';
             }
 
-            return rtrim($string, ', ');
+            return rtrim($conditionString, ', ');
         }
 
         return (string)new ArgumentValue(

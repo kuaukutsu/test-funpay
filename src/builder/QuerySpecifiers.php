@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace FpDbTest\builder;
 
-use LogicException;
-
+/**
+ * ?d - конвертация в целое число
+ * ?f - конвертация в число с плавающей точкой
+ */
 enum QuerySpecifiers: string
 {
     case string = 's';
     case integer = 'd';
     case double = 'f';
-    case array = 'a';
 
     /**
      * @param string | int | float $value
@@ -22,7 +23,6 @@ enum QuerySpecifiers: string
             self::string => (string)$value,
             self::integer => (int)$value,
             self::double => (float)$value,
-            default => throw new LogicException('Specifiers unexpected value type.')
         };
     }
 }

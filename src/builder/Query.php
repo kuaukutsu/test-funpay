@@ -52,13 +52,14 @@ final readonly class Query implements Stringable
         };
 
         $subqueries = [];
+        $subqueryName = static fn(int $inc): string => '[SUBQUERY' . $inc . ']';
         // Условные блоки не могут быть вложенными
         $query = preg_replace_callback(
             '/(?<subquery>\{.*})/U',
-            static function ($matches) use (&$subqueries) {
+            static function ($matches) use (&$subqueries, $subqueryName) {
                 /** @var array{"subquery": string} $matches */
                 $subqueries[] = trim($matches['subquery'], '{}');
-                return '[SUBQUERY' . (count($subqueries) - 1) . ']';
+                return $subqueryName(count($subqueries) - 1);
             },
             $query
         );
@@ -81,7 +82,7 @@ final readonly class Query implements Stringable
                     $subquery = '';
                 }
 
-                $query = (string)str_replace('[SUBQUERY' . $key . ']', $subquery, $query);
+                $query = (string)str_replace($subqueryName($key), $subquery, $query);
             }
         }
 
