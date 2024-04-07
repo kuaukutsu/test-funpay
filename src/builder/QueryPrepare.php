@@ -5,27 +5,14 @@ declare(strict_types=1);
 namespace FpDbTest\builder;
 
 use RuntimeException;
-use Stringable;
 use FpDbTest\exception\SkipException;
 
-final readonly class Query implements Stringable
+final readonly class QueryPrepare
 {
-    private string $queryPrepare;
-
-    public function __construct(string $query, QueryArguments $arguments)
-    {
-        $this->queryPrepare = $this->prepape($query, $arguments);
-    }
-
-    public function __toString(): string
-    {
-        return $this->queryPrepare;
-    }
-
     /**
      * @throws RuntimeException
      */
-    private function prepape(string $query, QueryArguments $arguments): string
+    public function prepape(string $query, QueryArguments $arguments): string
     {
         $inc = 0;
 

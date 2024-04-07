@@ -78,6 +78,8 @@ final readonly class Argument
             return rtrim($conditionString, ', ');
         }
 
+        // @note: can implement type checking
+
         return (string)new ArgumentValue(
             $specifiers instanceof QuerySpecifiers
                 ? $specifiers->castValue($this->value)
