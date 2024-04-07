@@ -17,14 +17,9 @@ final readonly class Query implements Stringable
         $this->queryPrepare = $this->prepape($query, $arguments);
     }
 
-    public function toString(): string
-    {
-        return $this->queryPrepare;
-    }
-
     public function __toString(): string
     {
-        return $this->toString();
+        return $this->queryPrepare;
     }
 
     /**
@@ -69,7 +64,7 @@ final readonly class Query implements Stringable
         );
 
         $query = preg_replace_callback(
-            '/(?<template>(?<token>SELECT\s|SET\s|=\s|\(|\s)\?(?<specificator>[adf#])?)/',
+            '/(?<template>(?<token>SELECT\s|SET\s|=\s|\(|\s)\?(?<specificator>[adf#])?)/i',
             $handler,
             $query
         );
@@ -78,7 +73,7 @@ final readonly class Query implements Stringable
             foreach ($subqueries as $key => $subquery) {
                 try {
                     $subquery = preg_replace_callback(
-                        '/(?<template>(?<token>=\s|\(|\s)\?(?<specificator>[adf#])?)/',
+                        '/(?<template>(?<token>=\s|\(|\s)\?(?<specificator>[adf#])?)/i',
                         $handler,
                         $subquery
                     );

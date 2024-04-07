@@ -17,7 +17,7 @@ final readonly class Database implements DatabaseInterface
 
     public function buildQuery(string $query, array $args = []): string
     {
-        return (new Query($query, new QueryArguments($args)))->toString();
+        return (string)new Query($query, new QueryArguments($args));
     }
 
     public function skip(): SkipException

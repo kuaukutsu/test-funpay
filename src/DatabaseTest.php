@@ -6,13 +6,10 @@ namespace FpDbTest;
 
 use RuntimeException;
 
-class DatabaseTest
+final readonly class DatabaseTest
 {
-    private DatabaseInterface $db;
-
-    public function __construct(DatabaseInterface $db)
+    public function __construct(private DatabaseInterface $db)
     {
-        $this->db = $db;
     }
 
     public function testBuildQuery(): void
